@@ -6,7 +6,7 @@ on:
 
 jobs:
   pc‑gamer‑win10:
-    runs‑on: [self‑hosted, windows, gpu‑rtx4070]
+    runs-on: [self‑hosted, windows, gpu‑rtx4070]
     env:
       CPU_CORES: 8
       RAM_GB: 32
