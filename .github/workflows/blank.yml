@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pc‑gamer‑win10:
+  pc-gamer'win10:
     runs-on: [self‑hosted, windows, gpu‑rtx4070]
     env:
       CPU_CORES: 8
