@@ -1,37 +1,33 @@
-name: VM‑PC‑Gamer Windows10
+name: VM‑PC‑Gamer‑Windows10
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # Ejecutar manualmente desde Actions
+  workflow_dispatch:
 
 jobs:
   pc‑gamer‑win10:
-    runs-on: windows-latest
+    runs‑on: [self‑hosted, windows, gpu‑rtx4070]
     env:
       CPU_CORES: 8
-      RAM_GB: 16
-      GPU_MODE: "habilitada‑emulada" # ⚠️ No es GPU real para juegos
+      RAM_GB: 32
+      GPU_MODE: "RTX4070‑fisica"
     steps:
-      - name: Ver sistema operativo
+      - name: Verificar GPU y sistema
         run: |
-          [Environment]::OSVersion
-          echo "=== Configuración estilo PC Gamer ==="
+          nvidia‑smi
+          echo "=== Configuración PC Gamer RTX 4070 ==="
           echo "CPU: ${{ env.CPU_CORES }} núcleos"
           echo "RAM: ${{ env.RAM_GB }} GB"
         shell: pwsh
 
-      - name: Instalar herramientas básicas (chocolatey)
+      - name: Instalar herramientas y drivers
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+          Set‑ExecutionPolicy Bypass ‑Scope Process ‑Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; iex ((New‑Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+          choco install ‑y directx vcredist‑all nvidia‑driver
         shell: pwsh
 
-      - name: Instalar drivers y utilidades de rendimiento
+      - name: Comprobación final
         run: |
-          choco install -y directx vcredist-all nvidia‑driver
-        shell: pwsh
-
-      - name: Comprobación final del entorno
-        run: |
-          echo "✅ Entorno Windows 10 estilo PC‑gamer listo (solo para pruebas, NO para jugar)"
+          echo "✅ Entorno con RTX 4070 listo (solo para tu runner propio)"
           systeminfo
         shell: pwsh
